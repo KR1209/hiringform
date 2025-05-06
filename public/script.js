@@ -1,40 +1,41 @@
-const SUPABASE_URL = "https://nxbijhjtdgxykpdgdbxw.supabase.co";
-const SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // keep the rest unchanged
+document.addEventListener("DOMContentLoaded", function() {
+  // Handle form submission
+  document.getElementById("hiringForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-document.getElementById("hiringForm").addEventListener("submit", async function (e) {
-  e.preventDefault();
+    // Select form elements and capture their values
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const skills = document.getElementById("skills").value;
 
-  const Name = document.getElementById("Name").value.trim();
-  const Email = document.getElementById("Email").value.trim();
-  const Phone = document.getElementById("Phone").value.trim();
-  const Skills = document.getElementById("Skills").value.trim();
+    // Log form data to check if it's captured correctly
+    console.log("Name:", name);
+    console.log("Email:", email);
+    console.log("Phone:", phone);
+    console.log("Skills:", skills);
 
-  const message = document.getElementById("responseMessage");
-
-  try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/hiring`, {
+    // Send the captured data to the server or backend API
+    fetch("/submit-hiring", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "apikey": SUPABASE_API_KEY,
-        "Authorization": `Bearer ${SUPABASE_API_KEY}`,
-        "Prefer": "return=representation"
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ Name, Email, Phone, Skills }),
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone,
+        skills: skills
+      })
+    })
+    .then(response => response.json())  // Parse the response from the server
+    .then(data => {
+      console.log("Form submitted successfully:", data);
+      // Handle success, like showing a success message or clearing the form
+    })
+    .catch(error => {
+      console.error("Error submitting form:", error);
+      // Handle errors, like showing an error message
     });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      message.textContent = "Form submitted successfully!";
-      message.style.color = "green";
-      document.getElementById("hiringForm").reset();
-    } else {
-      message.textContent = `Error submitting form: ${result.message || JSON.stringify(result)}`;
-      message.style.color = "red";
-    }
-  } catch (error) {
-    message.textContent = `Error: ${error.message}`;
-    message.style.color = "red";
-  }
+  });
 });

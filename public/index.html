@@ -1,23 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hiring Form</title>
-  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="form-container">
-    <h2>Hiring Form</h2>
-    <form id="hiringForm">
-      <input type="text" id="Name" placeholder="Full Name" required />
-      <input type="email" id="Email" placeholder="Email" required />
-      <input type="text" id="Phone" placeholder="Phone Number" required />
-      <input type="text" id="Skills" placeholder="Skills (comma separated)" required />
-      <button type="submit">Submit</button>
-    </form>
-    <p id="responseMessage"></p>
-  </div>
-  <script src="script.js"></script>
+
+  <!-- Hiring Form -->
+  <form id="hiringForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required /><br><br>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required /><br><br>
+    
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" name="phone" required /><br><br>
+    
+    <label for="skills">Skills:</label>
+    <textarea id="skills" name="skills" required></textarea><br><br>
+    
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Script for Form Submission -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Handle form submission
+      document.getElementById("hiringForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Select form elements
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const skills = document.getElementById("skills").value;
+
+        // Check if the values are captured correctly
+        console.log("Name:", name);
+        console.log("Email:", email);
+        console.log("Phone:", phone);
+        console.log("Skills:", skills);
+
+        // Proceed with form data processing (e.g., sending it to a server or API)
+        // Example using fetch (replace URL with your actual backend endpoint):
+        fetch("/submit-hiring", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            phone: phone,
+            skills: skills
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log("Form submitted successfully:", data);
+          // Handle success (e.g., show a success message)
+        })
+        .catch(error => {
+          console.error("Error submitting form:", error);
+          // Handle error (e.g., show an error message)
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>
