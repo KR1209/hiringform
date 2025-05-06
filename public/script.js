@@ -1,18 +1,17 @@
 const SUPABASE_URL = "https://nxbijhjtdgxykpdgdbxw.supabase.co";
-const SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YmlqaGp0ZGd4eWtwZGdkYnh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY0NTk1MjAsImV4cCI6MjA2MjAzNTUyMH0.SRd4AJnZVjcxwiz2UDb6r_dRbmTE1EAMWncjLJREwlM"; // keep the rest unchanged
+const SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YmlqaGp0ZGd4eWtwZGdkYnh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY0NTk1MjAsImV4cCI6MjA2MjAzNTUyMH0.SRd4AJnZVjcxwiz2UDb6r_dRbmTE1EAMWncjLJREwlM"; // use your actual key
 
 document.getElementById("hiringForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  const Name = document.getElementById("Name").value.trim();
-  const Email = document.getElementById("Email").value.trim();
-  const Phone = document.getElementById("Phone").value.trim();
-  const Skills = document.getElementById("Skills").value.trim();
-
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const skills = document.getElementById("skills").value.trim();
   const message = document.getElementById("responseMessage");
 
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/hiring`, {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/hiring_form`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,7 +19,7 @@ document.getElementById("hiringForm").addEventListener("submit", async function 
         "Authorization": `Bearer ${SUPABASE_API_KEY}`,
         "Prefer": "return=representation"
       },
-      body: JSON.stringify({ Name, Email, Phone, Skills }),
+      body: JSON.stringify({ name, email, phone, skills }),
     });
 
     const result = await response.json();
