@@ -1,7 +1,7 @@
 console.log("Script loaded");
 
 const SUPABASE_URL = "https://nxbijhjtdgxykpdgdbxw.supabase.co";
-const SUPABASE_API_KEY = "your-api-key-here";
+const SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54YmlqaGp0ZGd4eWtwZGdkYnh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY0NTk1MjAsImV4cCI6MjA2MjAzNTUyMH0.SRd4AJnZVjcxwiz2UDb6r_dRbmTE1EAMWncjLJREwlM";
 
 document.getElementById("hiringForm").addEventListener("submit", async function (e) {
   e.preventDefault();
