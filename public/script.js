@@ -4,19 +4,19 @@ const SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhY
 document.getElementById("hiringForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  // Collect form data
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const skills = document.getElementById("skills").value.trim();
 
-  // Perform POST request to Supabase
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/hiring_form`, {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/hiring`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "apikey": SUPABASE_API_KEY,
+        "Authorization": `Bearer ${SUPABASE_API_KEY}`,
+        "Prefer": "return=representation"
       },
       body: JSON.stringify({ name, email, phone, skills }),
     });
@@ -24,18 +24,15 @@ document.getElementById("hiringForm").addEventListener("submit", async function 
     const message = document.getElementById("responseMessage");
 
     if (response.ok) {
-      // If the form submission is successful
       message.textContent = "Form submitted successfully!";
       message.style.color = "green";
       document.getElementById("hiringForm").reset();
     } else {
-      // If there is an error with the submission
       const errorData = await response.json();
       message.textContent = `Error submitting form: ${errorData.message || "Unknown error"}`;
       message.style.color = "red";
     }
   } catch (error) {
-    // Catch any other errors like network issues
     const message = document.getElementById("responseMessage");
     message.textContent = `Error: ${error.message}`;
     message.style.color = "red";
